@@ -126,24 +126,22 @@ class _FeedLayoutState extends State<FeedLayout> {
               ),
             ),
             const Divider(height: 1, color: Colors.white),
-            const CardBuilder(
-                name: 'cat_lover99',
-                url: ['http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcT09XrYh-k_OCd0ERoA22SzGGV3dpudenQzt3zJKEy7ZpDqE_Gudv7wY70Sey9IhroKHBgOqtTvRSBu3qHk2xQ',
-                      'https://images.unsplash.com/photo-1611915387288-fd8d2f5f928b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80',
-                ]
-            ),
-            const CardBuilder(
-                name:'pinco.pallino',
-                url: ['https://cdn.pixabay.com/photo/2021/01/24/21/52/grand-canyon-5946657_960_720.jpg']
-            ),
-            const CardBuilder(
-                name: 'mariolino87',
-                url: ['https://cdn.pixabay.com/photo/2012/03/04/00/09/lions-21787_960_720.jpg']
-            )
+            Container(
+                height: 500,
+                child: postBuilder())
+
           ],
         ),
       ),
     );
+  }
+
+  Widget postBuilder(){
+    return ListView.builder(
+      itemCount: posts.length,
+        itemBuilder: (context, index){
+        return CardBuilder(post: posts[index]);
+    });
   }
 
 }

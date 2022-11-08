@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:fluttergram/models/user.dart';
 
 class Post {
@@ -8,10 +6,10 @@ class Post {
   String? position;
   String? text;
   String? url1;
-  Null? url2;
-  Null? url3;
-  Null? url4;
-  Null? url5;
+  String? url2;
+  String? url3;
+  String? url4;
+  String? url5;
 
   Post(
       {this.id,
@@ -52,8 +50,6 @@ class Post {
     return data;
   }
 
-  List<Post> postFromJson(String str) => List<Post>.from(json.decode(str).map((x) => Post.fromJson(x)));
 
-  String postToJson(List<Post> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 }
 

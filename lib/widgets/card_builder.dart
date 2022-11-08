@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttergram/screens/comment_screen.dart';
+import 'package:http/http.dart';
+
+import '../models/post.dart';
 
 class CardBuilder extends StatefulWidget {
-  final List<String> url;
-  final String name;
-  const CardBuilder({Key? key, required this.url, required this.name}) : super(key: key);
+  final Post post;
+  const CardBuilder({Key? key, required this.post}) : super(key: key);
 
 
   @override
@@ -15,16 +17,27 @@ class CardBuilder extends StatefulWidget {
 class _CardBuilderState extends State<CardBuilder> {
 
   late bool liked;
+  List<String> urls =['https://picsum.photos/300/400', 'https://picsum.photos/300/400'];
 
   @override
   void initState() {
     liked = false;
+    urls.clear();
+    urls.add(widget.post.url1!);
+    if(widget.post.url2 != null){
+      urls.add(widget.post.url2!);
+    }
+    if(widget.post.url3 != null){
+      urls.add(widget.post.url3!);
+    }
     super.initState();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
-
+    if(post != null){
     return Padding(
       padding: const EdgeInsets.only(top: 1.0, bottom: 10.0),
       child: Column(
@@ -43,14 +56,14 @@ class _CardBuilderState extends State<CardBuilder> {
               shape: BoxShape.circle),
                  ),
                ),
-               title: Text(widget.name, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
-                 subtitle: Text('Location'),
+               title: Text(widget.post.user!.username!, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
+                 subtitle: Text(widget.post.position != null? widget.post.position! : ""),
                trailing: Icon(Icons.more_vert),
     ),
             SizedBox(
               height: 350,
               width: double.infinity,
-                child: ImageBuilder(widget.url)),
+                child: ImageBuilder(urls)),
             Row(children: [
               IconButton(onPressed: () {
                 setState(() {
@@ -66,17 +79,18 @@ class _CardBuilderState extends State<CardBuilder> {
               }, icon: Icon(Icons.messenger_outline_rounded, color: Colors.white)),
               IconButton(onPressed: null, icon: Icon(Icons.near_me_outlined, color: Colors.white))
             ],),
-            const Padding(
+            Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.0),
                 child: Text.rich(TextSpan(
-                    text: 'nick_name  ',
+                    text: widget.post.user!.username!,
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                    children: [TextSpan(text:'Descrizione prova...', style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal))]
+                    children: [TextSpan(text: ' ${widget.post.text}', style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal))]
                 ), textAlign: TextAlign.start)
             )
           ]
       ),
-    );
+    );}
+    else{return Container();}
   }
 
    Widget ImageBuilder(List<String> url){
