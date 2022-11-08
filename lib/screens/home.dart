@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttergram/Bloc/post_list_bloc/post_list_bloc.dart';
+import 'package:fluttergram/network/api.dart';
 import 'package:fluttergram/screens/profile_layout.dart';
 
 import 'feed_layout.dart';
@@ -28,13 +31,19 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    ApiCalls apiCalls = ApiCalls();
+
     return Scaffold(
       backgroundColor: Colors.black38,
       body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints contraints) {
             switch (_currentIndex) {
               case 0:
-                return const FeedLayout();
+                return MultiBlocProvider(
+                  providers:[
+                    BlocProvider<PostsListBloc>(create: (context)=> PostsListBloc(apiCalls: apiCalls))
+                  ],
+                    child: const FeedLayout());
               case 1:
                 return Center(child: Container(color: Colors.grey, child: Text('Pagina $_currentIndex'),));
 
